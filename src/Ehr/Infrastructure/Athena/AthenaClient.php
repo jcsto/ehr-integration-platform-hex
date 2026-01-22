@@ -42,7 +42,7 @@ class AthenaClient implements EhrClientInterface
      * Uses 2-legged Token Generation
      * Response e.g.:
      *      {
-     *        "access_token": "bSQeVaRd47Tnof8GWbDZTud9ghLP",
+     *        "access_token": "bSQeVaRd4...........",
      *        "expires_in": "300"
      *      }
      * @return string|null
