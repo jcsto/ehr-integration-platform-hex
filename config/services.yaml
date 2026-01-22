@@ -1,0 +1,64 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
+parameters:
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+
+
+    # App\Controller\HomeController:
+    #     tags: ['controller.service_arguments']
+
+    App\Ehr\Infrastructure\Epic\EpicFhirClient:
+        tags:
+            - { name: 'app.ehr_client', key: 'epic' }
+        arguments:
+            $baseUrl: 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR'
+            $tokenUrl: 'https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token'
+            $clientId: '%env(EPIC_CLIENT_ID)%'
+            $clientSecret: '%env(EPIC_CLIENT_SECRET)%'
+    
+    App\Ehr\Infrastructure\Athena\AthenaClient:
+        tags:
+            - { name: 'app.ehr_client', key: 'athena' }
+        arguments:
+            $baseUrl: 'https://api.preview.platform.athenahealth.com/v1'
+            $tokenUrl: 'https://api.preview.platform.athenahealth.com/oauth2/v1/token'
+            $clientId: '%env(ATHENA_CLIENT_ID)%'
+            $clientSecret: '%env(ATHENA_CLIENT_SECRET)%'
+            $clientPractice: '%env(ATHENA_CLIENT_PRACTICE)%'
+            $clientScopes: '%env(ATHENA_CLIENT_SCOPES)%'
+    
+    App\Ehr\Application\EhrClientResolver:
+        arguments:
+            $clientsLocator: !tagged_locator { tag: 'app.ehr_client', index_by: 'key' }
+
+    # EventBus implementation (Hexagonal Architecture - Port binding)
+    App\Ehr\Application\Port\EventBus:
+        alias: App\Ehr\Infrastructure\Messaging\SymfonyEventBus
+
+    # SiteRepository implementation (Hexagonal Architecture - Port binding)
+    App\Ehr\Domain\Repository\SiteRepository:
+        alias: App\Ehr\Infrastructure\Persistence\DoctrineSiteRepository
+
+    # UserRepository implementation (Hexagonal Architecture - Port binding)
+    App\Ehr\Domain\Repository\UserRepository:
+        alias: App\Ehr\Infrastructure\Persistence\InMemoryUserRepository

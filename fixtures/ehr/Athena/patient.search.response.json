@@ -1,0 +1,52 @@
+{
+  "patients": [
+    {
+      "address1": "742 Evergreen Terrace",
+      "blockpatientyn": "N",
+      "city": "Springfield",
+      "confidentialitycode": "STANDARD",
+      "contextid": 202,
+      "currentdepartment": "Internal Medicine",
+      "currentdepartmentid": 12,
+      "dob": "1988-03-12",
+      "firstname": "John",
+      "lastname": "Doe",
+      "localpatientid": 4455,
+      "middleinitial": "A",
+      "namesuffix": "III",
+      "outstandingp": 250.75,
+      "patientid": 10001,
+      "preferredname": "Johnny",
+      "previouslastname": "Smith",
+      "providergroupid": 4,
+      "ssn": "999-00-1234",
+      "state": "OR",
+      "unappliedamount": 0,
+      "zip": 97401
+    },
+    {
+      "address1": "10 Downing Street",
+      "blockpatientyn": "Y",
+      "city": "London",
+      "confidentialitycode": "PRIVATE",
+      "contextid": 203,
+      "currentdepartment": "Cardiology",
+      "currentdepartmentid": 8,
+      "dob": "1975-07-25",
+      "firstname": "Sarah",
+      "lastname": "Miller",
+      "localpatientid": 8822,
+      "middleinitial": "E",
+      "namesuffix": "",
+      "outstandingp": 0,
+      "patientid": 10002,
+      "preferredname": "Sally",
+      "previouslastname": "Walker",
+      "providergroupid": 10,
+      "ssn": "123-45-6789",
+      "state": "NY",
+      "unappliedamount": 50.00,
+      "zip": 10001
+    }
+  ]
+}
